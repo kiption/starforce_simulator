@@ -4,9 +4,9 @@
 using namespace std;
 
 struct starforceRate {
-	int m_successRate;
-	int m_failureRate;
-	int m_destroyRate;
+	uint32_t m_successRate;
+	uint32_t m_failureRate;
+	uint32_t m_destroyRate;
 };
 
 class Rate {

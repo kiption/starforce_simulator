@@ -2,7 +2,7 @@
 
 random_device rd;
 default_random_engine dre(rd());
-uniform_int_distribution<int>urd(0, 1'000'000);
+uniform_int_distribution<uint32_t>urd(0, 1'000'000);
 
 Reinforce::Reinforce()
 {
@@ -14,14 +14,14 @@ Reinforce::~Reinforce()
 
 }
 
-int Reinforce::calcCnt()
+uint32_t Reinforce::calcCnt()
 {
 	return m_suc_cnt + m_fail_cnt + m_destory_cnt;
 }
 
 string Reinforce::Determine_Outcome()
 {
-	float randomValue = urd(dre);
+	uint32_t randomValue = urd(dre);
 
 	if (randomValue <= m_success_per) {
 		return "Success";
@@ -34,7 +34,7 @@ string Reinforce::Determine_Outcome()
 	}
 }
 
-int Reinforce::reinforce_sequence(int c_lv, int g_lv, int e_lv, bool antikey, bool starcatch)
+uint32_t Reinforce::reinforce_sequence(uint32_t c_lv, uint32_t g_lv, uint32_t e_lv, bool antikey, bool starcatch)
 {
 	Arranged_Percentage(c_lv, e_lv, antikey, starcatch);
 
@@ -65,9 +65,9 @@ int Reinforce::reinforce_sequence(int c_lv, int g_lv, int e_lv, bool antikey, bo
 	return c_lv;
 }
 
-void Reinforce::Arranged_Percentage(int curlv, int elv, bool antikey, bool starcatch)
+void Reinforce::Arranged_Percentage(uint32_t curlv, uint32_t elv, bool antikey, bool starcatch)
 {
-	int money{};
+	uint32_t money{};
 	if (starcatch) {
 		m_success_per = PercentageRate.CatchData[curlv].m_successRate;
 		m_failure_per = PercentageRate.CatchData[curlv].m_failureRate;
@@ -103,11 +103,11 @@ void Reinforce::Arranged_Percentage(int curlv, int elv, bool antikey, bool starc
 	m_money_cnt += money;
 }
 
-void Reinforce::compareRate(int copylv, int g_lv, bool starcatch)
+void Reinforce::compareRate(uint32_t copylv, uint32_t g_lv, bool starcatch)
 {
 	if (starcatch) {
 		cout << copylv << "레벨 부터 " << g_lv << "레벨 까지 스타캐치 적용된 각 구간 별 강화 횟수 및 확률 비교" << endl;
-		for (int i = copylv; i < g_lv; ++i) {
+		for (uint32_t i = copylv; i < g_lv; ++i) {
 			cout << "================" << endl;
 			cout << "현재 " << i << "단계에서의 전체 강화 횟수: " << sectioncount[i] << endl;
 			cout << "현재 " << i << "단계에서의 성공 횟수: " << successcount[i] << endl;
@@ -130,7 +130,7 @@ void Reinforce::compareRate(int copylv, int g_lv, bool starcatch)
 	}
 	else {
 		cout << copylv << "레벨 부터 " << g_lv << "레벨 까지 스타캐치 적용된 각 구간 별 강화 횟수 및 확률 비교" << endl;
-		for (int i = copylv; i < g_lv; ++i) {
+		for (uint32_t i = copylv; i < g_lv; ++i) {
 			cout << "================" << endl;
 			cout << "현재 " << i << "단계에서의 전체 강화 횟수: " << sectioncount[i] << endl;
 			cout << "현재 " << i << "단계에서의 성공 횟수: " << successcount[i] << endl;
@@ -154,7 +154,7 @@ void Reinforce::compareRate(int copylv, int g_lv, bool starcatch)
 	export_result_to_csv(successCRate, failureCRate, destoryCRate, copylv, g_lv);
 }
 
-void Reinforce::reinforc_repeat_sequence(int c_lv, int e_lv, bool antikey, bool starcatch)
+void Reinforce::reinforc_repeat_sequence(uint32_t c_lv, uint32_t e_lv, bool antikey, bool starcatch)
 {
 	repeat_Arranged_Percentage(c_lv, e_lv, antikey, starcatch);
 
@@ -176,9 +176,9 @@ void Reinforce::reinforc_repeat_sequence(int c_lv, int e_lv, bool antikey, bool 
 	}
 }
 
-void Reinforce::repeat_Arranged_Percentage(int curlv, int elv, bool antikey, bool starcatch)
+void Reinforce::repeat_Arranged_Percentage(uint32_t curlv, uint32_t elv, bool antikey, bool starcatch)
 {
-	int money{};
+	uint32_t money{};
 	if (starcatch) {
 		m_success_per = PercentageRate.CatchData[curlv].m_successRate;
 		m_failure_per = PercentageRate.CatchData[curlv].m_failureRate;
@@ -206,7 +206,7 @@ void Reinforce::repeat_Arranged_Percentage(int curlv, int elv, bool antikey, boo
 	m_money_cnt += money;
 }
 
-void Reinforce::repeat_compareRate(int copylv, bool starcatch)
+void Reinforce::repeat_compareRate(uint32_t copylv, bool starcatch)
 {
 	if (starcatch) {
 		cout << copylv << "레벨의 강화 횟수 및 확률 빈도" << endl;
@@ -258,11 +258,11 @@ void Reinforce::repeat_compareRate(int copylv, bool starcatch)
 	}
 }
 
-void Reinforce::repeat_csv_compareRate(int copylv, int g_lv, bool starcatch)
+void Reinforce::repeat_csv_compareRate(uint32_t copylv, uint32_t g_lv, bool starcatch)
 {
 	if (starcatch) {
 		cout << copylv << "레벨 부터 " << g_lv - 1 << "레벨 까지 스타캐치 적용된 각 구간 별 강화 횟수 및 확률 비교" << endl;
-		for (int i = copylv; i < g_lv; ++i) {
+		for (uint32_t i = copylv; i < g_lv; ++i) {
 			cout << "================" << endl;
 			cout << "현재 " << i << "단계에서의 전체 강화 횟수: " << sectioncount[i] << endl;
 			cout << "현재 " << i << "단계에서의 성공 횟수: " << successcount[i] << endl;
@@ -286,7 +286,7 @@ void Reinforce::repeat_csv_compareRate(int copylv, int g_lv, bool starcatch)
 	}
 	else {
 		cout << copylv << "레벨 부터 " << g_lv << "레벨 까지 스타캐치 적용된 각 구간 별 강화 횟수 및 확률 비교" << endl;
-		for (int i = copylv; i < g_lv; ++i) {
+		for (uint32_t i = copylv; i < g_lv; ++i) {
 			cout << "================" << endl;
 			cout << "현재 " << i << "단계에서의 전체 강화 횟수: " << sectioncount[i] << endl;
 			cout << "현재 " << i << "단계에서의 성공 횟수: " << successcount[i] << endl;
@@ -313,7 +313,7 @@ void Reinforce::repeat_csv_compareRate(int copylv, int g_lv, bool starcatch)
 	export_result_to_csv(successCRate, failureCRate, destoryCRate, copylv, g_lv);
 }
 
-int Reinforce::reinforce_costCSV_sequence(int c_lv, int g_lv, int e_lv, bool antikey, bool starcatch)
+uint32_t Reinforce::reinforce_costCSV_sequence(uint32_t c_lv, uint32_t g_lv, uint32_t e_lv, bool antikey, bool starcatch)
 {
 	costCSV_Arranged_Percentage(c_lv, e_lv, antikey, starcatch);
 
@@ -339,9 +339,9 @@ int Reinforce::reinforce_costCSV_sequence(int c_lv, int g_lv, int e_lv, bool ant
 	return c_lv;
 }
 
-void Reinforce::costCSV_Arranged_Percentage(int curlv, int elv, bool antikey, bool starcatch)
+void Reinforce::costCSV_Arranged_Percentage(uint32_t curlv, uint32_t elv, bool antikey, bool starcatch)
 {
-	int money{};
+	uint32_t money{};
 	if (starcatch) {
 		m_success_per = PercentageRate.CatchData[curlv].m_successRate;
 		m_failure_per = PercentageRate.CatchData[curlv].m_failureRate;
@@ -371,9 +371,9 @@ void Reinforce::costCSV_Arranged_Percentage(int curlv, int elv, bool antikey, bo
 
 void Reinforce::reset_all_data()
 {
-	m_success_per = 0.0f;
-	m_failure_per = 0.0f;
-	m_destory_per = 0.0f;
+	m_success_per = {};
+	m_failure_per = {};
+	m_destory_per = {};
 
 	// Count_seq
 	m_suc_cnt = {};
@@ -381,21 +381,21 @@ void Reinforce::reset_all_data()
 	m_destory_cnt = {};
 	m_money_cnt = {};
 
-	memset(sectioncount, 0, 30 * sizeof(int));
-	memset(successcount, 0, 30 * sizeof(int));
-	memset(failurecount, 0, 30 * sizeof(int));
-	memset(destorycount, 0, 30 * sizeof(int));
-	memset(successCRate, 0, 30 * sizeof(int));
-	memset(failureCRate, 0, 30 * sizeof(int));
-	memset(destoryCRate, 0, 30 * sizeof(int));
-	memset(MoneyCount, 0, 30 * sizeof(long long));
+	memset(sectioncount, 0, 30 * sizeof(uint32_t));
+	memset(successcount, 0, 30 * sizeof(uint32_t));
+	memset(failurecount, 0, 30 * sizeof(uint32_t));
+	memset(destorycount, 0, 30 * sizeof(uint32_t));
+	memset(successCRate, 0, 30 * sizeof(uint32_t));
+	memset(failureCRate, 0, 30 * sizeof(uint32_t));
+	memset(destoryCRate, 0, 30 * sizeof(uint32_t));
+	memset(MoneyCount, 0, 30 * sizeof(uint64_t));
 
 	m_success_rate = {};
 	m_failure_rate = {};
 	m_destroy_rate = {};
 }
 
-void Reinforce::printresult(int i)
+void Reinforce::pruint32_tresult(uint32_t i)
 {
 	locale::global(locale(""));
 	cout.imbue(locale());
@@ -409,7 +409,7 @@ void Reinforce::printresult(int i)
 	cout << "사용 메소: " << m_money_cnt << endl;
 }
 
-void Reinforce::export_result_to_csv(const float success[], const float fail[], const float destroy[], int from, int to) {
+void Reinforce::export_result_to_csv(const float success[], const float fail[], const float destroy[], uint32_t from, uint32_t to) {
 	const string& filename = "starforce_compare_rate_result.csv";
 	ofstream file(filename);
 
@@ -422,7 +422,7 @@ void Reinforce::export_result_to_csv(const float success[], const float fail[], 
 	file << "Level,Success,Fail,Destroy\n";
 	file << std::fixed << std::setprecision(2);
 
-	for (int i = from; i < to; ++i) {
+	for (uint32_t i = from; i < to; ++i) {
 		file << i << ","
 			<< success[i] << ","
 			<< fail[i] << ","
@@ -433,7 +433,7 @@ void Reinforce::export_result_to_csv(const float success[], const float fail[], 
 	std::cout << "CSV 파일 저장 완료: " << filename << std::endl;
 }
 
-void Reinforce::export_costresult_to_csv(int from, int to, int e_lv, bool antikey)
+void Reinforce::export_costresult_to_csv(uint32_t from, uint32_t to, uint32_t e_lv, bool antikey)
 {
 	const string& filename = "starforce_costresult.csv";
 	ofstream file(filename);
@@ -445,9 +445,9 @@ void Reinforce::export_costresult_to_csv(int from, int to, int e_lv, bool antike
 
 	// 헤더 작성
 	file << "Level,Cost,signedCost\n";
-	int money{};
-	long long tempm{};
-	for (int i = from; i < to; ++i) {
+	uint32_t money{};
+	uint64_t tempm{};
+	for (uint32_t i = from; i < to; ++i) {
 
 		money = resultcost.calculteCost(i, e_lv, antikey);
 		tempm = MoneyCount[i] / sectioncount[i];

@@ -8,25 +8,25 @@ Reinforce rf_func;
 
 optionCheck checkbox{};
 
-int main()
+uint32_t main()
 {
 	// 입력 키
 
 	// 시뮬레이터 형태 선택
-	int selectOption{};
+	uint32_t selectOption{};
 
 	// 필요 정보
-	int cur_level{};	// 현재 스타포스 수치
-	int goal_level{};	// 목표 스타포스 수치
-	int equip_level{};	// 장비 아이템 레벨
-	int copy_cur_lv{};	// 초기 스타포스 수치
+	uint32_t cur_level{};	// 현재 스타포스 수치
+	uint32_t goal_level{};	// 목표 스타포스 수치
+	uint32_t equip_level{};	// 장비 아이템 레벨
+	uint32_t copy_cur_lv{};	// 초기 스타포스 수치
 
 	bool antiDestroyCheck = false;
 	bool compareKeyCheck = false;
 
 	string inputkey{};
 
-	int repeattime{};
+	uint32_t repeattime{};
 
 	while (true) {
 		system("cls");
@@ -65,11 +65,11 @@ int main()
 			if (inputkey == "y" || inputkey == "Y") {
 				checkbox.Onantidestroy = true;
 			}
-			for (int i{}; i < repeattime; ++i) {
+			for (uint32_t i{}; i < repeattime; ++i) {
 				while (true) {
 					cur_level = rf_func.reinforce_sequence(cur_level, goal_level, equip_level, checkbox.Onantidestroy, checkbox.Onstarcatch);
 					if (cur_level == goal_level) {
-						//rf_func.printresult(selectOption);
+						//rf_func.pruint32_tresult(selectOption);
 						cur_level = copy_cur_lv;
 						break;
 					}
@@ -120,10 +120,10 @@ int main()
 			}
 
 			cout << "해당 기능은 결과 출력으로 넘어갑니다." << endl;
-			for (int i{}; i < repeattime; ++i) {
+			for (uint32_t i{}; i < repeattime; ++i) {
 				rf_func.reinforc_repeat_sequence(cur_level, equip_level, checkbox.Onantidestroy, checkbox.Onstarcatch);
 			}
-			rf_func.printresult(selectOption);
+			rf_func.pruint32_tresult(selectOption);
 
 			cout << "확률 비교 하겠습니까? Y/N" << endl;
 			cin >> inputkey;
@@ -165,12 +165,12 @@ int main()
 			}
 
 			cout << "해당 기능은 결과 출력으로 넘어갑니다." << endl;
-			for (int starlv{}; starlv < 30; starlv++) {
-				for (int i{}; i < repeattime; ++i) {
+			for (uint32_t starlv{}; starlv < 30; starlv++) {
+				for (uint32_t i{}; i < repeattime; ++i) {
 					rf_func.reinforc_repeat_sequence(starlv, equip_level, checkbox.Onantidestroy, checkbox.Onstarcatch);
 				}
 			}
-			rf_func.printresult(selectOption);
+			rf_func.pruint32_tresult(selectOption);
 
 			cout << "확률 비교 하겠습니까? Y/N" << endl;
 			cin >> inputkey;
@@ -217,7 +217,7 @@ int main()
 				checkbox.Onantidestroy = true;
 			}
 
-			for (int i{}; i < repeattime; ++i) {
+			for (uint32_t i{}; i < repeattime; ++i) {
 				while (true) {
 					cur_level = rf_func.reinforce_costCSV_sequence(cur_level, goal_level, equip_level, checkbox.Onantidestroy, checkbox.Onstarcatch);
 
@@ -226,7 +226,7 @@ int main()
 					}
 				}
 			}
-			//rf_func.printresult(selectOption);
+			//rf_func.pruint32_tresult(selectOption);
 
 			cout << "비용 비교 하겠습니까? Y/N" << endl;
 			cin >> inputkey;

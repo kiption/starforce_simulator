@@ -9,7 +9,7 @@ public:
 	~Cost();
 
 public:
-	int result_cost{};
+	uint32_t result_cost{};
 
-	int calculteCost(int s_lv, int i_lv, bool antikey);
+	uint32_t calculteCost(uint32_t s_lv, uint32_t i_lv, bool antikey);
 };

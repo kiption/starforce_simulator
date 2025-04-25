@@ -10,7 +10,7 @@ Cost::~Cost()
 
 }
 
-int Cost::calculteCost(int s_lv, int i_lv, bool antikey)
+uint32_t Cost::calculteCost(uint32_t s_lv, uint32_t i_lv, bool antikey)
 {
 	result_cost = 0;
 	if (s_lv < 10) {
@@ -67,7 +67,7 @@ int Cost::calculteCost(int s_lv, int i_lv, bool antikey)
 		}
 	}
 
-	result_cost = static_cast<int>(round(result_cost / 100)) * 100;;
+	result_cost = static_cast<uint32_t>(round(result_cost / 100)) * 100;;
 
 	return result_cost;
 }
